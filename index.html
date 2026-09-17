@@ -3,1082 +3,1717 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>Fasya & Millen — Undangan Pernikahan</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --cream:#FBF8F1;
-    --cream-2:#F2EDE2;
-    --ink:#3D4650;
-    --ink-soft:#78818A;
 
-    --blue:#AFC5D4;
-    --blue-deep:#829EAF;
+/* =========================================================
+   ROOT
+========================================================= */
 
-    --pink:#E7D5D5;
-    --pink-deep:#C79FA8;
+:root{
+  --paper:#FBF8F0;
+  --paper-dark:#F2ECDF;
 
-    --sage:#A9B99B;
-    --sage-deep:#7D966F;
+  --ink:#3F4145;
+  --ink-soft:#7C7D7A;
 
-    --lavender:#C8C3D5;
-    --lavender-deep:#A29BB7;
+  --green:#7D9B69;
+  --green-light:#A9BC91;
+  --green-pale:#C8D4B9;
 
-    --gold:#B9A06A;
+  --blue:#91B7D5;
+  --blue-light:#B8D0E3;
 
-    --card:#FFFDF8;
-    --card-line:#E5DED2;
-    --shadow:rgba(61,70,80,0.12);
+  --pink:#D99EAE;
+  --pink-light:#EBC5CD;
+
+  --yellow:#D8B75F;
+  --yellow-light:#E8D28C;
+
+  --lavender:#AAA7C4;
+
+  --gold:#B79B62;
+
+  --card:#FFFDF8;
+  --line:#DED8CB;
+
+  --shadow:rgba(55,63,53,.13);
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+@media (prefers-color-scheme: dark){
+
+  :root:not([data-theme="light"]){
+
+    --paper:#292A27;
+    --paper-dark:#33342F;
+
+    --ink:#F3F0E8;
+    --ink-soft:#C9C6BC;
+
+    --card:#353630;
+    --line:#4B4C45;
+
+    --shadow:rgba(0,0,0,.35);
+
   }
 
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --cream:#26282A;
-      --cream-2:#303235;
-      --ink:#F2EEE8;
-      --ink-soft:#C8C4BD;
-      --card:#343638;
-      --card-line:#4A4B4B;
-      --shadow:rgba(0,0,0,0.4);
-    }
-  }
-
-  :root[data-theme="dark"]{
-    --cream:#26282A;
-    --cream-2:#303235;
-    --ink:#F2EEE8;
-    --ink-soft:#C8C4BD;
-    --card:#343638;
-    --card-line:#4A4B4B;
-    --shadow:rgba(0,0,0,0.4);
-  }
-
-  *{
-    box-sizing:border-box;
-  }
-
-  html{
-    scroll-behavior:smooth;
-  }
-
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'EB Garamond', Georgia, 'Times New Roman', serif;
-    font-size:19px;
-    line-height:1.65;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  h1,h2,h3,.display{
-    font-family:'Playfair Display', Georgia, serif;
-    font-weight:500;
-    margin:0;
-    color:var(--ink);
-  }
-
-  .script{
-    font-family:'Mrs Saint Delafield', cursive;
-    font-weight:400;
-    color:var(--lavender-deep);
-    line-height:1;
-  }
-
-  a{
-    color:inherit;
-  }
-
-  img{
-    max-width:100%;
-    display:block;
-  }
-
-  .wrap{
-    max-width:640px;
-    margin:0 auto;
-    padding:0 28px;
-  }
-
-  .center{
-    text-align:center;
-  }
+}
 
 
-  /* =========================================
-     ENVELOPE SCREEN
-  ========================================= */
+/* =========================================================
+   RESET
+========================================================= */
 
-  #envelope-screen{
-    position:fixed;
-    inset:0;
-    z-index:50;
+*{
+  box-sizing:border-box;
+}
 
-    background:
-      radial-gradient(
-        circle at 15% 15%,
-        rgba(175,197,212,.30),
-        transparent 42%
-      ),
-      radial-gradient(
-        circle at 88% 75%,
-        rgba(169,185,155,.28),
-        transparent 44%
-      ),
-      radial-gradient(
-        circle at 55% 45%,
-        rgba(200,195,213,.16),
-        transparent 55%
-      ),
-      var(--cream);
+html{
+  scroll-behavior:smooth;
+}
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+body{
+  margin:0;
 
-    transition:
-      opacity .9s ease,
-      visibility .9s ease;
-  }
+  background:var(--paper);
+  color:var(--ink);
 
-  #envelope-screen.hidden{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-  }
+  font-family:
+    'EB Garamond',
+    Georgia,
+    'Times New Roman',
+    serif;
 
-  .envelope-box{
-    position:relative;
-    text-align:center;
-    padding:32px;
-    max-width:400px;
-  }
+  font-size:19px;
+  line-height:1.65;
 
-  .envelope-box::before,
-  .envelope-box::after{
-    content:"✦";
-    position:absolute;
-    color:var(--gold);
-    opacity:.55;
-    font-size:16px;
-  }
+  overflow-x:hidden;
 
-  .envelope-box::before{
-    left:5px;
-    top:35px;
-  }
+  -webkit-font-smoothing:antialiased;
+}
 
-  .envelope-box::after{
-    right:5px;
-    bottom:80px;
-    font-size:11px;
-  }
+h1,
+h2,
+h3,
+.display{
+  margin:0;
 
-  .envelope-art{
-    width:180px;
-    height:130px;
-    margin:0 auto 34px;
-    position:relative;
-    animation:pulse-env 3.2s ease-in-out infinite;
-  }
+  font-family:
+    'Playfair Display',
+    Georgia,
+    serif;
 
-  .env-body{
-    position:absolute;
-    inset:0;
-    top:22px;
+  font-weight:500;
+}
 
-    background:
-      linear-gradient(
-        180deg,
-        var(--card),
-        var(--cream-2)
-      );
+a{
+  color:inherit;
+}
 
-    border:1px solid var(--card-line);
-    border-radius:4px;
+img{
+  max-width:100%;
+  display:block;
+}
 
-    box-shadow:
-      0 18px 30px -14px var(--shadow);
-  }
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
 
-  .env-flap{
-    position:absolute;
-    top:22px;
-    left:0;
-    right:0;
-    height:66px;
+.wrap{
+  width:100%;
+  max-width:680px;
 
-    background:
-      linear-gradient(
-        145deg,
-        var(--blue),
-        var(--lavender)
-      );
+  margin:0 auto;
 
-    clip-path:polygon(
+  padding-left:28px;
+  padding-right:28px;
+}
+
+.center{
+  text-align:center;
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+
+  transform:translateY(22px);
+
+  transition:
+    opacity .9s ease,
+    transform .9s ease;
+}
+
+.reveal.in{
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+/* =========================================================
+   ENVELOPE
+========================================================= */
+
+#envelope-screen{
+
+  position:fixed;
+  inset:0;
+
+  z-index:100;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(145,183,213,.25),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(125,155,105,.20),
+      transparent 40%
+    ),
+
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(217,158,174,.08),
+      transparent 55%
+    ),
+
+    var(--paper);
+
+  transition:
+    opacity .9s ease,
+    visibility .9s ease;
+}
+
+#envelope-screen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.envelope-box{
+
+  position:relative;
+
+  width:min(420px,90vw);
+
+  text-align:center;
+
+  padding:35px 25px 40px;
+}
+
+
+/* decorative leaves around envelope */
+
+.envelope-box::before{
+  content:"";
+
+  position:absolute;
+
+  width:120px;
+  height:90px;
+
+  left:-25px;
+  top:10px;
+
+  border-top:2px solid var(--green);
+  border-radius:50%;
+
+  transform:rotate(-15deg);
+
+  opacity:.55;
+}
+
+.envelope-box::after{
+  content:"";
+
+  position:absolute;
+
+  width:100px;
+  height:70px;
+
+  right:-20px;
+  bottom:25px;
+
+  border-bottom:2px solid var(--green);
+  border-radius:50%;
+
+  transform:rotate(-20deg);
+
+  opacity:.55;
+}
+
+
+/* envelope */
+
+.envelope-art{
+
+  width:190px;
+  height:140px;
+
+  margin:0 auto 35px;
+
+  position:relative;
+
+  animation:
+    envelopeFloat
+    3.5s
+    ease-in-out
+    infinite;
+}
+
+.env-body{
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  top:25px;
+  bottom:0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #FFFDF8,
+      #F0EBDD
+    );
+
+  border:1px solid var(--line);
+
+  border-radius:5px;
+
+  box-shadow:
+    0 20px 35px -18px var(--shadow);
+}
+
+.env-flap{
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  top:25px;
+
+  height:72px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      var(--blue-light),
+      var(--green-pale)
+    );
+
+  clip-path:
+    polygon(
       0 0,
       100% 0,
       50% 78%
     );
 
-    border-radius:4px 4px 0 0;
-  }
+  border-radius:5px 5px 0 0;
+}
 
-  .env-seal{
-    position:absolute;
-    top:58px;
-    left:50%;
-    transform:translateX(-50%);
+.env-seal{
 
-    width:38px;
-    height:38px;
-    border-radius:50%;
+  position:absolute;
 
-    background:var(--cream);
-    border:1.5px solid var(--gold);
+  top:62px;
+  left:50%;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  transform:translateX(-50%);
 
-    font-size:15px;
-  }
+  width:42px;
+  height:42px;
 
-  .eyebrow{
-    font-family:'EB Garamond', serif;
-    font-style:italic;
-    font-size:15px;
-    letter-spacing:.03em;
-    color:var(--ink-soft);
-    margin-bottom:6px;
-  }
+  border-radius:50%;
 
-  .envelope-box .display{
-    font-size:30px;
-    margin-bottom:4px;
-  }
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  .envelope-box .script-and{
-    font-size:34px;
-    margin:2px 0;
-  }
+  background:var(--paper);
 
-  .guest-line{
-    margin-top:22px;
-    font-size:16px;
-    color:var(--ink-soft);
-    font-style:italic;
-  }
+  border:1.5px solid var(--gold);
 
-  .guest-name{
-    color:var(--ink);
-    font-weight:600;
-    font-style:normal;
-  }
+  font-size:17px;
 
-  .open-btn{
-    margin-top:28px;
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.06);
+}
 
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
+@keyframes envelopeFloat{
 
-    background:var(--ink);
-    color:var(--cream);
-
-    border:none;
-    cursor:pointer;
-
-    padding:13px 30px;
-
-    font-family:'EB Garamond', serif;
-    font-size:17px;
-    letter-spacing:.02em;
-
-    border-radius:30px;
-
-    box-shadow:
-      0 10px 24px -10px var(--shadow);
-
-    transition:
-      transform .25s ease,
-      box-shadow .25s ease;
-  }
-
-  .open-btn:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-      0 14px 28px -10px var(--shadow);
-  }
-
-  .open-btn:active{
+  0%,100%{
     transform:translateY(0);
   }
 
-  @keyframes pulse-env{
-    0%,100%{
-      transform:translateY(0);
-    }
-
-    50%{
-      transform:translateY(-5px);
-    }
+  50%{
+    transform:translateY(-6px);
   }
 
+}
 
-  /* =========================================
-     MAIN INVITATION
-  ========================================= */
+.eyebrow{
 
-  #invitation{
-    display:none;
+  font-style:italic;
+
+  font-size:15px;
+
+  letter-spacing:.04em;
+
+  color:var(--ink-soft);
+
+  margin-bottom:6px;
+}
+
+.envelope-box .display{
+
+  font-size:31px;
+}
+
+.script{
+
+  font-family:
+    'Mrs Saint Delafield',
+    cursive;
+
+  font-weight:400;
+
+  line-height:1;
+
+  color:var(--green);
+}
+
+.script-and{
+  font-size:35px;
+}
+
+.guest-line{
+
+  margin-top:23px;
+
+  font-size:16px;
+
+  color:var(--ink-soft);
+
+  font-style:italic;
+}
+
+.guest-name{
+
+  color:var(--ink);
+
+  font-style:normal;
+
+  font-weight:600;
+}
+
+.open-btn{
+
+  margin-top:28px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:13px 31px;
+
+  border:none;
+
+  border-radius:40px;
+
+  background:var(--green);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-family:
+    'EB Garamond',
+    serif;
+
+  font-size:17px;
+
+  box-shadow:
+    0 12px 25px -12px var(--shadow);
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.open-btn:hover{
+
+  transform:translateY(-2px);
+
+  background:var(--green);
+}
+
+
+/* =========================================================
+   INVITATION
+========================================================= */
+
+#invitation{
+  display:none;
+}
+
+#invitation.shown{
+  display:block;
+}
+
+section{
+
+  position:relative;
+
+  padding:90px 0;
+
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   BOTANICAL DECORATIONS
+========================================================= */
+
+.botanical{
+
+  position:absolute;
+
+  pointer-events:none;
+
+  z-index:0;
+}
+
+.botanical svg{
+
+  width:100%;
+  height:100%;
+
+  overflow:visible;
+}
+
+
+/* large organic corners */
+
+.botanical-left{
+
+  position:absolute;
+
+  width:190px;
+  height:300px;
+
+  left:-55px;
+  top:0;
+
+  opacity:.72;
+
+  pointer-events:none;
+}
+
+.botanical-right{
+
+  position:absolute;
+
+  width:190px;
+  height:300px;
+
+  right:-55px;
+  bottom:0;
+
+  transform:scaleX(-1);
+
+  opacity:.72;
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   SMALL FLOWER SVG STYLE
+========================================================= */
+
+.flower-piece{
+
+  position:absolute;
+
+  pointer-events:none;
+
+  z-index:0;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+#hero{
+
+  min-height:100vh;
+
+  display:flex;
+  align-items:center;
+
+  padding-top:65px;
+  padding-bottom:65px;
+
+  text-align:center;
+}
+
+.hero-frame{
+
+  position:relative;
+
+  padding:
+    90px 45px
+    100px;
+
+  max-width:640px;
+
+  margin:auto;
+}
+
+
+/* organic floral frame */
+
+.hero-frame::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:30px 20px;
+
+  border:
+
+    1px solid
+    rgba(125,155,105,.25);
+
+  border-radius:
+    48% 52% 47% 53% /
+    8% 10% 7% 9%;
+
+  transform:
+    rotate(-1deg);
+
+  pointer-events:none;
+}
+
+
+/* tiny center ornament */
+
+.hero-frame::after{
+
+  content:"✿";
+
+  position:absolute;
+
+  left:50%;
+  bottom:47px;
+
+  transform:translateX(-50%);
+
+  color:var(--pink);
+
+  font-size:18px;
+}
+
+
+/* hero botanical top */
+
+.hero-botanical-top{
+
+  position:absolute;
+
+  left:50%;
+  top:0;
+
+  width:250px;
+  height:100px;
+
+  transform:translateX(-50%);
+
+  pointer-events:none;
+}
+
+.eyebrow-serif{
+
+  position:relative;
+  z-index:2;
+
+  font-size:14px;
+
+  letter-spacing:.16em;
+
+  color:var(--ink-soft);
+
+  font-style:italic;
+
+  margin-bottom:20px;
+}
+
+.hero-names{
+
+  position:relative;
+  z-index:2;
+
+  font-size:44px;
+
+  line-height:1.16;
+}
+
+.hero-and{
+
+  position:relative;
+  z-index:2;
+
+  font-size:43px;
+
+  margin:10px 0;
+
+  color:var(--pink);
+}
+
+.hero-date{
+
+  position:relative;
+  z-index:2;
+
+  margin-top:25px;
+
+  font-size:18px;
+
+  color:var(--ink-soft);
+
+  letter-spacing:.035em;
+}
+
+.hero-date strong{
+  color:var(--ink);
+}
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+#quote{
+
+  padding-top:75px;
+  padding-bottom:90px;
+}
+
+.quote-decoration{
+
+  width:100px;
+  height:40px;
+
+  margin:
+    0 auto 28px;
+}
+
+#quote blockquote{
+
+  position:relative;
+  z-index:2;
+
+  margin:0;
+
+  font-family:
+    'Playfair Display',
+    serif;
+
+  font-size:22px;
+
+  font-style:italic;
+
+  line-height:1.75;
+
+  color:var(--ink);
+}
+
+#quote cite{
+
+  display:block;
+
+  margin-top:18px;
+
+  font-family:
+    'EB Garamond',
+    serif;
+
+  font-size:15px;
+
+  font-style:normal;
+
+  color:var(--ink-soft);
+}
+
+
+/* =========================================================
+   COUPLE
+========================================================= */
+
+#couple{
+  padding-top:75px;
+}
+
+
+/* floral arch around cards */
+
+.couple-decoration{
+
+  position:absolute;
+
+  width:230px;
+  height:150px;
+
+  left:50%;
+  top:0;
+
+  transform:translateX(-50%);
+
+  pointer-events:none;
+
+  opacity:.65;
+}
+
+.couple-grid{
+
+  position:relative;
+  z-index:2;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:38px;
+
+  margin-top:48px;
+}
+
+.couple-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,253,248,.98),
+      rgba(247,243,233,.98)
+    );
+
+  border:1px solid var(--line);
+
+  border-radius:
+    48% 48% 24px 24px /
+    20px 20px 24px 24px;
+
+  padding:
+    30px 27px 35px;
+
+  text-align:center;
+
+  box-shadow:
+    0 20px 38px -25px var(--shadow);
+}
+
+
+/* little botanical corners inside card */
+
+.couple-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:100px;
+  height:100px;
+
+  left:-28px;
+  top:-25px;
+
+  border-left:
+    1.5px solid
+    var(--green);
+
+  border-radius:50%;
+
+  transform:rotate(-25deg);
+
+  opacity:.35;
+}
+
+.couple-card::after{
+
+  content:"✿";
+
+  position:absolute;
+
+  right:22px;
+  bottom:12px;
+
+  color:var(--pink);
+
+  opacity:.45;
+
+  font-size:23px;
+}
+
+
+/* photo */
+
+.photo-frame{
+
+  position:relative;
+
+  width:190px;
+  height:235px;
+
+  margin:0 auto 25px;
+
+  padding:8px;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  box-shadow:
+    0 12px 25px -16px var(--shadow);
+
+  transform:rotate(-2deg);
+}
+
+.couple-card:nth-child(3) .photo-frame{
+
+  transform:rotate(2deg);
+}
+
+
+/* floral vine around photo */
+
+.photo-frame::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-17px;
+
+  border-left:
+    2px solid
+    var(--green);
+
+  border-top:
+    2px solid
+    transparent;
+
+  border-radius:
+    65% 35% 50% 50%;
+
+  transform:
+    rotate(-10deg);
+
+  pointer-events:none;
+
+  opacity:.55;
+}
+
+.photo-frame::after{
+
+  content:"✿";
+
+  position:absolute;
+
+  top:-24px;
+  right:7px;
+
+  color:var(--pink);
+
+  font-size:25px;
+
+  text-shadow:
+    18px 12px 0 var(--blue),
+    -15px 25px 0 var(--yellow-light);
+}
+
+.couple-photo{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  object-position:center;
+
+  display:block;
+}
+
+.couple-card h3{
+
+  font-size:15px;
+
+  letter-spacing:.1em;
+
+  color:var(--ink-soft);
+
+  font-weight:400;
+
+  font-style:italic;
+
+  margin-top:4px;
+}
+
+.fullname{
+
+  font-family:
+    'Playfair Display',
+    serif;
+
+  font-size:27px;
+
+  line-height:1.35;
+
+  margin-top:9px;
+}
+
+.nickname{
+
+  margin-top:4px;
+
+  color:var(--green);
+
+  font-style:italic;
+
+  font-size:17px;
+}
+
+.parents{
+
+  margin-top:17px;
+
+  color:var(--ink-soft);
+
+  font-size:16px;
+
+  line-height:1.55;
+}
+
+.amp{
+
+  position:relative;
+  z-index:2;
+
+  text-align:center;
+
+  margin:-8px 0;
+
+  font-size:38px;
+
+  color:var(--pink);
+}
+
+
+/* =========================================================
+   AGENDA
+========================================================= */
+
+#agenda{
+  padding-top:85px;
+}
+
+.agenda-title{
+
+  position:relative;
+  z-index:2;
+
+  font-size:29px;
+
+  margin-top:7px;
+}
+
+.agenda-card{
+
+  position:relative;
+
+  z-index:2;
+
+  background:var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:22px;
+
+  padding:
+    34px 25px;
+
+  margin-top:27px;
+
+  box-shadow:
+    0 18px 32px -24px var(--shadow);
+
+  text-align:center;
+
+  overflow:hidden;
+}
+
+.agenda-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:85px;
+  height:85px;
+
+  border:
+    1px solid
+    var(--green);
+
+  border-radius:50%;
+
+  left:-48px;
+  top:-38px;
+
+  opacity:.22;
+}
+
+.agenda-card::after{
+
+  content:"✿";
+
+  position:absolute;
+
+  right:20px;
+  bottom:12px;
+
+  color:var(--pink);
+
+  opacity:.4;
+
+  font-size:20px;
+}
+
+.agenda-card .kind{
+
+  font-family:
+    'Playfair Display',
+    serif;
+
+  font-size:23px;
+
+  margin-bottom:4px;
+}
+
+.agenda-card .time{
+
+  font-size:17px;
+
+  color:var(--green);
+
+  margin-bottom:14px;
+}
+
+.agenda-card .place{
+
+  font-size:16px;
+
+  color:var(--ink-soft);
+
+  max-width:360px;
+
+  margin:auto;
+}
+
+.agenda-sep{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin:9px 0;
+}
+
+.venue-box{
+
+  position:relative;
+  z-index:2;
+
+  margin-top:34px;
+
+  color:var(--ink-soft);
+
+  font-size:16px;
+
+  text-align:center;
+}
+
+.venue-name{
+
+  display:block;
+
+  font-family:
+    'Playfair Display',
+    serif;
+
+  color:var(--ink);
+
+  font-size:21px;
+
+  margin-bottom:6px;
+}
+
+.maps-btn{
+
+  margin-top:19px;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:
+    11px 24px;
+
+  border:
+    1px solid
+    var(--green);
+
+  color:var(--green);
+
+  text-decoration:none;
+
+  border-radius:30px;
+
+  font-size:16px;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+}
+
+.maps-btn:hover{
+
+  background:var(--green);
+
+  color:#fff;
+}
+
+
+/* =========================================================
+   DOA RESTU
+========================================================= */
+
+#gallery{
+
+  padding-top:85px;
+
+  text-align:center;
+}
+
+.gallery-inner{
+
+  position:relative;
+  z-index:2;
+}
+
+.gallery-title{
+
+  font-size:27px;
+
+  margin-top:7px;
+}
+
+.gallery-copy{
+
+  color:var(--ink-soft);
+
+  max-width:430px;
+
+  margin:
+    15px auto 0;
+}
+
+
+/* large watercolor-like floral garland */
+
+.bouquet-row{
+
+  position:relative;
+
+  width:100%;
+
+  max-width:470px;
+
+  height:150px;
+
+  margin:
+    35px auto 0;
+
+  display:flex;
+
+  align-items:flex-end;
+
+  justify-content:center;
+
+  gap:0;
+}
+
+.bouquet-row svg{
+
+  width:130px;
+  height:150px;
+
+  overflow:visible;
+}
+
+.bouquet-row svg:nth-child(1){
+  transform:rotate(-8deg);
+}
+
+.bouquet-row svg:nth-child(2){
+  transform:translateY(-10px);
+}
+
+.bouquet-row svg:nth-child(3){
+  transform:rotate(8deg);
+}
+
+
+/* =========================================================
+   WISHES
+========================================================= */
+
+#wishes{
+
+  padding-top:80px;
+}
+
+.wish-form{
+
+  position:relative;
+  z-index:2;
+
+  margin-top:31px;
+}
+
+#wishes input,
+#wishes select,
+#wishes textarea{
+
+  width:100%;
+
+  margin-top:12px;
+
+  padding:
+    13px 15px;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:12px;
+
+  background:var(--card);
+
+  color:var(--ink);
+
+  font-family:
+    'EB Garamond',
+    serif;
+
+  font-size:16px;
+
+  outline:none;
+}
+
+#wishes input:focus,
+#wishes select:focus,
+#wishes textarea:focus{
+
+  border-color:
+    var(--green);
+}
+
+#wishes textarea{
+
+  min-height:100px;
+
+  resize:vertical;
+}
+
+.send-btn{
+
+  width:100%;
+
+  margin-top:17px;
+
+  padding:13px;
+
+  border:none;
+
+  border-radius:30px;
+
+  background:var(--green);
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:17px;
+
+  transition:
+    transform .2s ease;
+}
+
+.send-btn:hover{
+  transform:translateY(-2px);
+}
+
+.wish-note{
+
+  margin-top:10px;
+
+  color:var(--ink-soft);
+
+  font-size:14px;
+
+  font-style:italic;
+}
+
+.wish-list{
+
+  position:relative;
+  z-index:2;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+
+  margin-top:27px;
+}
+
+.wish-item{
+
+  background:var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:14px;
+
+  padding:
+    15px 18px;
+
+  text-align:left;
+
+  font-size:16px;
+
+  box-shadow:
+    0 8px 20px -18px var(--shadow);
+}
+
+.wish-item .who{
+
+  color:var(--green);
+
+  font-weight:600;
+
+  font-style:italic;
+}
+
+.wish-item .att{
+
+  color:var(--ink-soft);
+
+  font-size:13px;
+}
+
+.wish-item .txt{
+
+  margin-top:5px;
+}
+
+
+/* =========================================================
+   CLOSING
+========================================================= */
+
+#closing{
+
+  position:relative;
+
+  padding-top:85px;
+
+  padding-bottom:100px;
+
+  text-align:center;
+}
+
+.closing-decoration{
+
+  width:180px;
+  height:90px;
+
+  margin:
+    0 auto 20px;
+}
+
+#closing .display{
+
+  font-size:31px;
+}
+
+.thanks{
+
+  max-width:430px;
+
+  margin:
+    15px auto 0;
+
+  color:var(--ink-soft);
+
+  font-size:17px;
+}
+
+.closing-names{
+
+  margin-top:30px;
+
+  font-size:34px;
+
+  color:var(--green);
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+#music-toggle{
+
+  position:fixed;
+
+  right:20px;
+  bottom:20px;
+
+  z-index:80;
+
+  width:53px;
+  height:53px;
+
+  border-radius:50%;
+
+  background:var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  box-shadow:
+    0 12px 25px -12px var(--shadow);
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+}
+
+#music-toggle svg{
+
+  width:22px;
+  height:22px;
+}
+
+#music-toggle.spinning svg{
+
+  animation:
+    spin 4s linear infinite;
+}
+
+@keyframes spin{
+
+  to{
+    transform:rotate(360deg);
   }
 
-  #invitation.shown{
-    display:block;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+  .wrap{
+    padding-left:22px;
+    padding-right:22px;
   }
 
   section{
-    position:relative;
-    padding:86px 0;
-    overflow:hidden;
+    padding:
+      70px 0;
   }
-
-  .divider{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-
-    margin:26px auto 0;
-
-    width:min(220px,60%);
-  }
-
-  .divider .line{
-    flex:1;
-    height:1px;
-    background:var(--card-line);
-  }
-
-  .divider svg{
-    flex-shrink:0;
-  }
-
-  .reveal{
-    opacity:0;
-    transform:translateY(22px);
-
-    transition:
-      opacity .9s ease,
-      transform .9s ease;
-  }
-
-  .reveal.in{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-
-  /* =========================================
-     WHIMSICAL BOTANICAL ELEMENTS
-  ========================================= */
-
-  .botanical-corner{
-    position:absolute;
-    width:145px;
-    height:145px;
-    opacity:.72;
-    pointer-events:none;
-    z-index:0;
-  }
-
-  .botanical-corner svg{
-    width:100%;
-    height:100%;
-    overflow:visible;
-  }
-
-  .botanical-corner.left{
-    left:-42px;
-    top:-28px;
-  }
-
-  .botanical-corner.right{
-    right:-42px;
-    bottom:-28px;
-    transform:scaleX(-1) rotate(8deg);
-  }
-
-  .petals{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:0;
-  }
-
-  .petal{
-    position:absolute;
-    width:9px;
-    height:14px;
-    border-radius:100% 0 100% 0;
-    opacity:.48;
-  }
-
-  .petal:nth-child(1){
-    left:10%;
-    top:18%;
-    background:var(--lavender);
-    transform:rotate(25deg);
-  }
-
-  .petal:nth-child(2){
-    right:12%;
-    top:32%;
-    background:var(--blue);
-    transform:rotate(70deg);
-  }
-
-  .petal:nth-child(3){
-    left:18%;
-    bottom:22%;
-    background:var(--sage);
-    transform:rotate(-25deg);
-  }
-
-  .petal:nth-child(4){
-    right:20%;
-    bottom:15%;
-    background:var(--pink);
-    transform:rotate(55deg);
-  }
-
-  .petal:nth-child(5){
-    left:6%;
-    top:48%;
-    background:var(--gold);
-    transform:rotate(10deg);
-  }
-
-
-  /* =========================================
-     HERO
-  ========================================= */
 
   #hero{
-    padding-top:70px;
-    text-align:center;
+
+    min-height:100svh;
+
+    padding-top:45px;
+    padding-bottom:45px;
   }
 
   .hero-frame{
-    position:relative;
-    padding:55px 28px 65px;
-  }
 
-  .hero-frame > *:not(.botanical-corner){
-    position:relative;
-    z-index:1;
+    padding:
+      80px 25px
+      85px;
   }
 
   .hero-frame::before{
-    content:"";
 
-    position:absolute;
-
-    width:150px;
-    height:1px;
-
-    background:
-      linear-gradient(
-        90deg,
-        transparent,
-        var(--gold),
-        transparent
-      );
-
-    left:50%;
-    top:25px;
-
-    transform:translateX(-50%);
-
-    opacity:.55;
-  }
-
-  .hero-frame::after{
-    content:"✦";
-
-    position:absolute;
-
-    left:50%;
-    bottom:25px;
-
-    transform:translateX(-50%);
-
-    color:var(--gold);
-    font-size:13px;
-    opacity:.65;
-  }
-
-  .eyebrow-serif{
-    font-size:14px;
-    letter-spacing:.14em;
-    color:var(--ink-soft);
-    font-style:italic;
-    margin-bottom:18px;
+    inset:
+      25px 10px;
   }
 
   .hero-names{
-    font-size:44px;
-    line-height:1.15;
+    font-size:34px;
   }
 
   .hero-and{
-    font-size:40px;
-    margin:7px 0;
-    color:var(--lavender-deep);
+    font-size:32px;
   }
 
   .hero-date{
-    margin-top:24px;
-    font-size:18px;
-    color:var(--ink-soft);
-    letter-spacing:.04em;
+    font-size:17px;
   }
 
-  .hero-date strong{
-    color:var(--ink);
-    font-weight:600;
+  .hero-botanical-top{
+
+    width:190px;
+    height:80px;
   }
 
+  .botanical-left,
+  .botanical-right{
 
-  /* =========================================
-     QUOTE
-  ========================================= */
+    width:130px;
+    height:220px;
+  }
 
   #quote blockquote{
-    margin:0;
-
-    font-family:'Playfair Display', serif;
-    font-style:italic;
-
-    font-size:22px;
-    line-height:1.7;
-
-    color:var(--ink);
-  }
-
-  #quote cite{
-    display:block;
-    margin-top:16px;
-
-    font-style:normal;
-    font-size:15px;
-
-    color:var(--ink-soft);
-  }
-
-
-  /* =========================================
-     COUPLE
-  ========================================= */
-
-  .couple-grid{
-    display:flex;
-    flex-direction:column;
-    gap:34px;
-
-    margin-top:38px;
+    font-size:20px;
   }
 
   .couple-card{
-    position:relative;
-    overflow:hidden;
-
-    background:
-      linear-gradient(
-        145deg,
-        rgba(255,253,248,.98),
-        rgba(248,245,237,.98)
-      );
-
-    border:1px solid var(--card-line);
-    border-radius:22px;
-
-    padding:38px 26px;
-
-    text-align:center;
-
-    box-shadow:
-      0 18px 35px -22px var(--shadow);
+    padding:
+      28px 21px
+      32px;
   }
 
-  .couple-card::before{
-    content:"";
+  .photo-frame{
 
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    border-radius:50%;
-
-    background:var(--blue);
-    opacity:.08;
-
-    top:-45px;
-    right:-30px;
+    width:170px;
+    height:215px;
   }
 
-  .couple-card::after{
-    content:"✿";
-
-    position:absolute;
-
-    color:var(--sage-deep);
-    opacity:.28;
-
-    font-size:30px;
-
-    left:18px;
-    bottom:10px;
+  .fullname{
+    font-size:24px;
   }
-
-  .couple-card .flower{
-    width:52px;
-    height:52px;
-    margin:0 auto 14px;
-  }
-
-  .couple-card h3{
-    font-size:15px;
-    letter-spacing:.1em;
-
-    color:var(--ink-soft);
-
-    font-weight:400;
-    font-style:italic;
-
-    font-family:'EB Garamond',serif;
-  }
-
-  .couple-card .fullname{
-    font-size:27px;
-    margin-top:10px;
-  }
-
-  .couple-card .nickname{
-    font-size:16px;
-    color:var(--lavender-deep);
-    margin-top:4px;
-    font-style:italic;
-  }
-
-  .couple-card .parents{
-    margin-top:16px;
-    font-size:16px;
-    color:var(--ink-soft);
-  }
-
-  .amp{
-    text-align:center;
-    margin:6px 0;
-  }
-
-
-  /* =========================================
-     AGENDA
-  ========================================= */
-
-  .agenda-card{
-    position:relative;
-
-    background:var(--card);
-    border:1px solid var(--card-line);
-    border-radius:20px;
-
-    padding:32px 26px;
-    margin-top:26px;
-
-    box-shadow:
-      0 16px 30px -20px var(--shadow);
-
-    text-align:center;
-  }
-
-  .agenda-card .kind{
-    font-family:'Playfair Display', serif;
-    font-size:22px;
-    margin-bottom:4px;
-  }
-
-  .agenda-card .time{
-    font-size:17px;
-    color:var(--lavender-deep);
-    margin-bottom:14px;
-    letter-spacing:.02em;
-  }
-
-  .agenda-card .place{
-    font-size:16px;
-    color:var(--ink-soft);
-    max-width:340px;
-    margin:0 auto;
-  }
-
-  .agenda-sep{
-    display:flex;
-    justify-content:center;
-    margin:8px 0;
-  }
-
-  .venue-box{
-    margin-top:30px;
-
-    text-align:center;
-    font-size:16px;
-
-    color:var(--ink-soft);
-  }
-
-  .venue-box .venue-name{
-    display:block;
-
-    font-family:'Playfair Display',serif;
-    font-size:20px;
-
-    color:var(--ink);
-
-    margin-bottom:6px;
-  }
-
-  .maps-btn{
-    margin-top:18px;
-
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    border:1px solid var(--ink);
-    color:var(--ink);
-
-    text-decoration:none;
-
-    padding:11px 24px;
-
-    border-radius:30px;
-
-    font-size:16px;
-
-    transition:
-      background .25s ease,
-      color .25s ease;
-  }
-
-  .maps-btn:hover{
-    background:var(--ink);
-    color:var(--cream);
-  }
-
-
-  /* =========================================
-     DOA RESTU / BOTANICAL BOUQUET
-  ========================================= */
 
   .bouquet-row{
-    position:relative;
 
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
+    height:125px;
 
-    gap:4px;
-
-    margin-top:42px;
-
-    min-height:105px;
-
-    flex-wrap:wrap;
+    max-width:370px;
   }
 
   .bouquet-row svg{
-    width:78px;
-    height:100px;
-    overflow:visible;
+
+    width:100px;
+    height:125px;
   }
 
-  .bouquet-row svg:nth-child(1){
-    transform:rotate(-8deg) translateY(5px);
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .envelope-art{
+    animation:none;
   }
 
-  .bouquet-row svg:nth-child(2){
-    transform:translateY(-8px);
-  }
+  .reveal{
 
-  .bouquet-row svg:nth-child(3){
-    transform:rotate(8deg) translateY(5px);
-  }
+    opacity:1;
 
+    transform:none;
 
-  /* =========================================
-     WISHES
-  ========================================= */
-
-  #wishes textarea,
-  #wishes input,
-  #wishes select{
-    width:100%;
-
-    font-family:'EB Garamond', serif;
-    font-size:16px;
-
-    padding:12px 14px;
-
-    border:1px solid var(--card-line);
-    border-radius:10px;
-
-    background:var(--card);
-    color:var(--ink);
-
-    margin-top:12px;
-  }
-
-  #wishes textarea{
-    resize:vertical;
-    min-height:90px;
-  }
-
-  .wish-form{
-    margin-top:30px;
-  }
-
-  .send-btn{
-    margin-top:16px;
-
-    width:100%;
-
-    border:none;
-    cursor:pointer;
-
-    background:var(--ink);
-    color:var(--cream);
-
-    padding:13px;
-
-    font-family:'EB Garamond', serif;
-    font-size:17px;
-
-    border-radius:30px;
-
-    transition:transform .2s ease;
-  }
-
-  .send-btn:hover{
-    transform:translateY(-2px);
-  }
-
-  .wish-note{
-    font-size:14px;
-    color:var(--ink-soft);
-
-    margin-top:10px;
-
-    font-style:italic;
-  }
-
-  .wish-list{
-    margin-top:26px;
-
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-
-  .wish-item{
-    background:var(--card);
-
-    border:1px solid var(--card-line);
-    border-radius:12px;
-
-    padding:14px 18px;
-
-    text-align:left;
-    font-size:16px;
-  }
-
-  .wish-item .who{
-    font-weight:600;
-    color:var(--lavender-deep);
-    font-style:italic;
-  }
-
-  .wish-item .att{
-    font-size:13px;
-    color:var(--ink-soft);
-    margin-top:4px;
-  }
-
-
-  /* =========================================
-     CLOSING
-  ========================================= */
-
-  #closing{
-    text-align:center;
-    padding-bottom:60px;
-  }
-
-  #closing .display{
-    font-size:30px;
-  }
-
-  #closing .thanks{
-    margin-top:14px;
-
-    color:var(--ink-soft);
-    font-size:17px;
-
-    max-width:420px;
-
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .closing-names{
-    margin-top:26px;
-    font-size:26px;
-    color:var(--lavender-deep);
-  }
-
-
-  /* =========================================
-     MUSIC
-  ========================================= */
-
-  #music-toggle{
-    position:fixed;
-
-    bottom:22px;
-    right:22px;
-
-    z-index:40;
-
-    width:52px;
-    height:52px;
-
-    border-radius:50%;
-
-    background:var(--card);
-    border:1px solid var(--card-line);
-
-    box-shadow:
-      0 10px 22px -8px var(--shadow);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-  }
-
-  #music-toggle svg{
-    width:22px;
-    height:22px;
+    transition:none;
   }
 
   #music-toggle.spinning svg{
-    animation:spin 4s linear infinite;
+    animation:none;
   }
 
-  @keyframes spin{
-    to{
-      transform:rotate(360deg);
-    }
-  }
+}
 
-
-  /* =========================================
-     MOBILE
-  ========================================= */
-
-  @media(max-width:480px){
-
-    .wrap{
-      padding:0 22px;
-    }
-
-    section{
-      padding:64px 0;
-    }
-
-    .hero-frame{
-      padding:48px 22px 58px;
-    }
-
-    .hero-names{
-      font-size:34px;
-    }
-
-    .hero-and{
-      font-size:30px;
-    }
-
-    .botanical-corner{
-      width:105px;
-      height:105px;
-    }
-
-    .botanical-corner.left{
-      left:-34px;
-      top:-18px;
-    }
-
-    .botanical-corner.right{
-      right:-34px;
-      bottom:-18px;
-    }
-
-    .couple-card .fullname{
-      font-size:24px;
-    }
-
-    .bouquet-row svg{
-      width:65px;
-      height:90px;
-    }
-  }
-
-  @media(prefers-reduced-motion:reduce){
-
-    .envelope-art{
-      animation:none;
-    }
-
-    .reveal{
-      opacity:1;
-      transform:none;
-      transition:none;
-    }
-
-    #music-toggle.spinning svg{
-      animation:none;
-    }
-  }
 </style>
 </head>
+
 
 <body>
 
 
-<!-- =========================================
-     ENVELOPE / COVER SCREEN
-========================================= -->
+<!-- =======================================================
+     ENVELOPE
+======================================================= -->
 
 <div id="envelope-screen">
 
@@ -1091,7 +1726,7 @@
       <div class="env-flap"></div>
 
       <div class="env-seal">
-        🌸
+        🌿
       </div>
 
     </div>
@@ -1102,19 +1737,31 @@
 
     <div class="display">
       Fasya
-      <span class="script script-and">&amp;</span>
+      <span class="script script-and">
+        &amp;
+      </span>
       Millen
     </div>
 
     <div class="guest-line">
+
       Kepada Bapak/Ibu/Saudara/i
+
       <br>
-      <span class="guest-name" id="guestName">
+
+      <span
+        class="guest-name"
+        id="guestName"
+      >
         Tamu Undangan
       </span>
+
     </div>
 
-    <button class="open-btn" id="openBtn">
+    <button
+      class="open-btn"
+      id="openBtn"
+    >
       Buka Undangan
     </button>
 
@@ -1123,149 +1770,256 @@
 </div>
 
 
-<!-- =========================================
-     MAIN INVITATION
-========================================= -->
+<!-- =======================================================
+     INVITATION
+======================================================= -->
 
 <div id="invitation">
 
 
-  <!-- HERO -->
-  <section id="hero">
+<!-- =======================================================
+     HERO
+======================================================= -->
 
-    <div class="wrap hero-frame reveal">
+<section id="hero">
 
-      <!-- Botanical corner kiri -->
-      <div class="botanical-corner left">
+  <!-- botanical left -->
 
-        <svg viewBox="0 0 160 160" fill="none">
+  <div class="botanical-left">
+
+    <svg
+      viewBox="0 0 190 300"
+      fill="none"
+    >
+
+      <path
+        d="M170 290 C120 240 125 185 92 140 C65 103 35 76 15 20"
+        stroke="#7D9B69"
+        stroke-width="2"
+        fill="none"
+      />
+
+      <path
+        d="M105 158 C73 160 50 146 35 123"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <path
+        d="M135 211 C158 197 169 177 170 153"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <ellipse
+        cx="50"
+        cy="139"
+        rx="7"
+        ry="18"
+        transform="rotate(-55 50 139)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="151"
+        cy="192"
+        rx="7"
+        ry="18"
+        transform="rotate(55 151 192)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="76"
+        cy="94"
+        rx="6"
+        ry="15"
+        transform="rotate(-48 76 94)"
+        fill="#A9BC91"
+      />
+
+      <circle
+        cx="17"
+        cy="21"
+        r="10"
+        fill="#91B7D5"
+      />
+
+      <circle
+        cx="5"
+        cy="30"
+        r="8"
+        fill="#D99EAE"
+      />
+
+      <circle
+        cx="29"
+        cy="31"
+        r="8"
+        fill="#E8D28C"
+      />
+
+      <circle
+        cx="17"
+        cy="34"
+        r="5"
+        fill="#B79B62"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <!-- botanical right -->
+
+  <div class="botanical-right">
+
+    <svg
+      viewBox="0 0 190 300"
+      fill="none"
+    >
+
+      <path
+        d="M170 290 C120 240 125 185 92 140 C65 103 35 76 15 20"
+        stroke="#7D9B69"
+        stroke-width="2"
+        fill="none"
+      />
+
+      <path
+        d="M105 158 C73 160 50 146 35 123"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <path
+        d="M135 211 C158 197 169 177 170 153"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <ellipse
+        cx="50"
+        cy="139"
+        rx="7"
+        ry="18"
+        transform="rotate(-55 50 139)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="151"
+        cy="192"
+        rx="7"
+        ry="18"
+        transform="rotate(55 151 192)"
+        fill="#A9BC91"
+      />
+
+      <circle
+        cx="17"
+        cy="21"
+        r="10"
+        fill="#91B7D5"
+      />
+
+      <circle
+        cx="5"
+        cy="30"
+        r="8"
+        fill="#D99EAE"
+      />
+
+      <circle
+        cx="29"
+        cy="31"
+        r="8"
+        fill="#E8D28C"
+      />
+
+      <circle
+        cx="17"
+        cy="34"
+        r="5"
+        fill="#B79B62"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div class="wrap">
+
+    <div class="hero-frame reveal">
+
+
+      <!-- top floral ornament -->
+
+      <div class="hero-botanical-top">
+
+        <svg
+          viewBox="0 0 250 100"
+          fill="none"
+        >
 
           <path
-            d="M18 145 C35 105 52 70 78 38"
-            stroke="#7D966F"
-            stroke-width="1.5"
+            d="M20 65 C70 30 90 75 125 48 C160 20 180 66 230 35"
+            stroke="#7D9B69"
+            stroke-width="2"
             fill="none"
           />
 
           <path
-            d="M42 104 C25 91 20 77 22 63"
-            stroke="#7D966F"
-            stroke-width="1.3"
-          />
-
-          <path
-            d="M57 82 C75 70 82 55 80 43"
-            stroke="#7D966F"
-            stroke-width="1.3"
-          />
-
-          <ellipse
-            cx="29"
-            cy="75"
-            rx="7"
-            ry="15"
-            transform="rotate(-48 29 75)"
-            fill="#A9B99B"
-          />
-
-          <ellipse
-            cx="70"
-            cy="67"
-            rx="7"
-            ry="15"
-            transform="rotate(48 70 67)"
-            fill="#A9B99B"
-          />
-
-          <circle
-            cx="78"
-            cy="34"
-            r="8"
-            fill="#C8C3D5"
-          />
-
-          <circle
-            cx="67"
-            cy="38"
-            r="7"
-            fill="#E7D5D5"
-          />
-
-          <circle
-            cx="88"
-            cy="41"
-            r="7"
-            fill="#AFC5D4"
-          />
-
-          <circle
-            cx="78"
-            cy="43"
-            r="5"
-            fill="#B9A06A"
-          />
-
-        </svg>
-
-      </div>
-
-
-      <!-- Botanical corner kanan -->
-      <div class="botanical-corner right">
-
-        <svg viewBox="0 0 160 160" fill="none">
-
-          <path
-            d="M18 145 C35 105 52 70 78 38"
-            stroke="#7D966F"
+            d="M45 48 C37 31 27 25 17 28"
+            stroke="#7D9B69"
             stroke-width="1.5"
-            fill="none"
+          />
+
+          <path
+            d="M205 52 C216 37 226 32 238 35"
+            stroke="#7D9B69"
+            stroke-width="1.5"
           />
 
           <ellipse
-            cx="29"
-            cy="75"
-            rx="7"
-            ry="15"
-            transform="rotate(-48 29 75)"
-            fill="#A9B99B"
+            cx="40"
+            cy="37"
+            rx="5"
+            ry="12"
+            transform="rotate(-50 40 37)"
+            fill="#A9BC91"
           />
 
           <ellipse
-            cx="70"
-            cy="67"
-            rx="7"
-            ry="15"
-            transform="rotate(48 70 67)"
-            fill="#A9B99B"
-          />
-
-          <circle
-            cx="78"
-            cy="34"
-            r="8"
-            fill="#C8C3D5"
-          />
-
-          <circle
-            cx="67"
-            cy="38"
-            r="7"
-            fill="#E7D5D5"
-          />
-
-          <circle
-            cx="88"
+            cx="214"
             cy="41"
-            r="7"
-            fill="#AFC5D4"
+            rx="5"
+            ry="12"
+            transform="rotate(50 214 41)"
+            fill="#A9BC91"
           />
 
           <circle
-            cx="78"
-            cy="43"
+            cx="124"
+            cy="48"
+            r="6"
+            fill="#D99EAE"
+          />
+
+          <circle
+            cx="115"
+            cy="52"
             r="5"
-            fill="#B9A06A"
+            fill="#91B7D5"
+          />
+
+          <circle
+            cx="133"
+            cy="52"
+            r="5"
+            fill="#E8D28C"
           />
 
         </svg>
@@ -1290,637 +2044,865 @@
       </div>
 
       <div class="hero-date">
-        Minggu, <strong>5 Oktober 2025</strong>
+
+        Minggu,
+        <strong>
+          5 Oktober 2025
+        </strong>
+
         <br>
-        Aula Graha Prima, Tambun Selatan
-      </div>
 
-    </div>
-
-  </section>
-
-
-  <!-- QUOTE -->
-  <section id="quote">
-
-    <div class="petals">
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-    </div>
-
-    <div class="wrap center reveal">
-
-      <blockquote>
-
-        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram bersamanya. Dia jadikan pula rasa kasih dan sayang di antara kalian. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."
-
-        <cite>
-          — QS. Ar-Rum: 21
-        </cite>
-
-      </blockquote>
-
-    </div>
-
-  </section>
-
-
-  <!-- COUPLE -->
-  <section id="couple">
-
-    <div class="petals">
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-    </div>
-
-    <div class="wrap center reveal">
-
-      <div class="eyebrow-serif">
-        Mempelai
-      </div>
-
-      <div class="couple-grid">
-
-
-        <!-- Groom -->
-        <div class="couple-card">
-
-          <svg class="flower" viewBox="0 0 48 48" fill="none">
-
-            <circle
-              cx="24"
-              cy="16"
-              r="8"
-              fill="#E7D5D5"
-            />
-
-            <circle
-              cx="14"
-              cy="24"
-              r="8"
-              fill="#AFC5D4"
-            />
-
-            <circle
-              cx="34"
-              cy="24"
-              r="8"
-              fill="#C8C3D5"
-            />
-
-            <circle
-              cx="24"
-              cy="32"
-              r="8"
-              fill="#E7D5D5"
-            />
-
-            <circle
-              cx="24"
-              cy="24"
-              r="6"
-              fill="#B9A06A"
-            />
-
-          </svg>
-
-          <h3>
-            Mempelai Pria
-          </h3>
-
-          <div class="fullname">
-            Tubagus Fauzan Syahid, S.I.Kom
-          </div>
-
-          <div class="nickname">
-            Fasya
-          </div>
-
-          <div class="parents">
-            Putra dari Bapak Drs. Tubagus Heru S.Y, MM.
-            <br>
-            &amp; Ibu Dian Nurhayati
-          </div>
-
-        </div>
-
-
-        <div class="amp script" style="font-size:32px;">
-          &amp;
-        </div>
-
-
-        <!-- Bride -->
-        <div class="couple-card">
-
-          <svg class="flower" viewBox="0 0 48 48" fill="none">
-
-            <circle
-              cx="24"
-              cy="16"
-              r="8"
-              fill="#E7D5D5"
-            />
-
-            <circle
-              cx="14"
-              cy="24"
-              r="8"
-              fill="#AFC5D4"
-            />
-
-            <circle
-              cx="34"
-              cy="24"
-              r="8"
-              fill="#C8C3D5"
-            />
-
-            <circle
-              cx="24"
-              cy="32"
-              r="8"
-              fill="#E7D5D5"
-            />
-
-            <circle
-              cx="24"
-              cy="24"
-              r="6"
-              fill="#B9A06A"
-            />
-
-          </svg>
-
-          <h3>
-            Mempelai Wanita
-          </h3>
-
-          <div class="fullname">
-            Millenia Putri Buana, S.S
-          </div>
-
-          <div class="nickname">
-            Millen
-          </div>
-
-          <div class="parents">
-            Putri dari Bapak Suryo Buono
-            <br>
-            &amp; Ibu Puryani
-          </div>
-
-        </div>
+        Aula Graha Prima,
+        Tambun Selatan
 
       </div>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- AGENDA -->
-  <section id="agenda">
+<!-- =======================================================
+     QUOTE
+======================================================= -->
 
-    <div class="petals">
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-    </div>
+<section id="quote">
 
-    <div class="wrap center reveal">
+  <div class="wrap center reveal">
 
-      <div class="eyebrow-serif">
-        Rangkaian Acara
-      </div>
+    <div class="quote-decoration">
 
-      <h2
-        class="display"
-        style="font-size:28px; margin-top:6px;"
+      <svg
+        viewBox="0 0 100 40"
+        fill="none"
       >
-        Minggu, 5 Oktober 2025
-      </h2>
+
+        <path
+          d="M10 25 C30 10 38 30 50 20 C62 10 70 30 90 15"
+          stroke="#7D9B69"
+          stroke-width="1.5"
+        />
+
+        <circle
+          cx="50"
+          cy="20"
+          r="4"
+          fill="#D99EAE"
+        />
+
+      </svg>
+
+    </div>
 
 
-      <div class="agenda-card">
+    <blockquote>
 
-        <div class="kind">
-          Akad Nikah
+      "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram bersamanya. Dia jadikan pula rasa kasih dan sayang di antara kalian. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."
+
+      <cite>
+        — QS. Ar-Rum: 21
+      </cite>
+
+    </blockquote>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     COUPLE
+======================================================= -->
+
+<section id="couple">
+
+
+  <!-- floral top arch -->
+
+  <div class="couple-decoration">
+
+    <svg
+      viewBox="0 0 230 150"
+      fill="none"
+    >
+
+      <path
+        d="M10 135 C35 65 72 35 115 45 C160 35 195 70 220 135"
+        stroke="#7D9B69"
+        stroke-width="2"
+        fill="none"
+      />
+
+      <path
+        d="M35 92 C24 78 18 67 18 52"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <path
+        d="M195 92 C206 78 212 67 212 52"
+        stroke="#7D9B69"
+        stroke-width="1.5"
+      />
+
+      <ellipse
+        cx="28"
+        cy="76"
+        rx="6"
+        ry="15"
+        transform="rotate(-45 28 76)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="202"
+        cy="76"
+        rx="6"
+        ry="15"
+        transform="rotate(45 202 76)"
+        fill="#A9BC91"
+      />
+
+      <circle
+        cx="115"
+        cy="43"
+        r="9"
+        fill="#D99EAE"
+      />
+
+      <circle
+        cx="104"
+        cy="49"
+        r="7"
+        fill="#91B7D5"
+      />
+
+      <circle
+        cx="126"
+        cy="49"
+        r="7"
+        fill="#E8D28C"
+      />
+
+      <circle
+        cx="115"
+        cy="52"
+        r="5"
+        fill="#B79B62"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div class="wrap center reveal">
+
+    <div class="eyebrow-serif">
+      Mempelai
+    </div>
+
+
+    <div class="couple-grid">
+
+
+      <!-- =================================================
+           GROOM
+      ================================================= -->
+
+      <div class="couple-card">
+
+
+        <div class="photo-frame">
+
+          <img
+            src="assets/groom.jpg"
+            alt="Tubagus Fauzan Syahid"
+            class="couple-photo"
+          >
+
         </div>
 
-        <div class="time">
-          09.00 – 11.00 WIB
+
+        <h3>
+          Mempelai Pria
+        </h3>
+
+        <div class="fullname">
+          Tubagus Fauzan Syahid, S.I.Kom
         </div>
 
-        <div class="place">
-          Aula Graha Prima Blok A, RT.001/RW.016
+        <div class="nickname">
+          Fasya
+        </div>
+
+        <div class="parents">
+
+          Putra dari Bapak
+          Drs. Tubagus Heru S.Y, MM.
+
           <br>
-          Kel. Mangunjaya, Kec. Tambun Selatan
+
+          &amp; Ibu Dian Nurhayati
+
         </div>
 
       </div>
 
 
-      <div class="agenda-sep">
-
-        <svg
-          width="30"
-          height="30"
-          viewBox="0 0 30 30"
-        >
-          <circle
-            cx="15"
-            cy="15"
-            r="3"
-            fill="#B9A06A"
-          />
-        </svg>
-
+      <div class="amp script">
+        &amp;
       </div>
 
 
-      <div class="agenda-card">
+      <!-- =================================================
+           BRIDE
+      ================================================= -->
 
-        <div class="kind">
-          Resepsi
+      <div class="couple-card">
+
+
+        <div class="photo-frame">
+
+          <img
+            src="assets/bride.jpg"
+            alt="Millenia Putri Buana"
+            class="couple-photo"
+          >
+
         </div>
 
-        <div class="time">
-          13.00 – 17.00 WIB
+
+        <h3>
+          Mempelai Wanita
+        </h3>
+
+        <div class="fullname">
+          Millenia Putri Buana, S.S
         </div>
 
-        <div class="place">
-          Aula Graha Prima Blok A, RT.001/RW.016
+        <div class="nickname">
+          Millen
+        </div>
+
+        <div class="parents">
+
+          Putri dari Bapak Suryo Buono
+
           <br>
-          Kel. Mangunjaya, Kec. Tambun Selatan
+
+          &amp; Ibu Puryani
+
         </div>
 
       </div>
 
+    </div>
 
-      <div class="venue-box">
+  </div>
 
-        <span class="venue-name">
-          Aula Graha Prima
-        </span>
+</section>
 
-        Blok A, RT.001/RW.016,
-        Kel. Mangunjaya,
+
+<!-- =======================================================
+     AGENDA
+======================================================= -->
+
+<section id="agenda">
+
+
+  <div class="botanical-left">
+
+    <svg
+      viewBox="0 0 190 300"
+      fill="none"
+    >
+
+      <path
+        d="M170 290 C120 240 125 185 92 140 C65 103 35 76 15 20"
+        stroke="#7D9B69"
+        stroke-width="2"
+        fill="none"
+      />
+
+      <ellipse
+        cx="70"
+        cy="98"
+        rx="7"
+        ry="17"
+        transform="rotate(-45 70 98)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="132"
+        cy="190"
+        rx="7"
+        ry="17"
+        transform="rotate(45 132 190)"
+        fill="#A9BC91"
+      />
+
+      <circle
+        cx="17"
+        cy="21"
+        r="9"
+        fill="#91B7D5"
+      />
+
+      <circle
+        cx="7"
+        cy="29"
+        r="7"
+        fill="#D99EAE"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div class="wrap center reveal">
+
+    <div class="eyebrow-serif">
+      Rangkaian Acara
+    </div>
+
+    <h2 class="display agenda-title">
+      Minggu, 5 Oktober 2025
+    </h2>
+
+
+    <!-- AKAD -->
+
+    <div class="agenda-card">
+
+      <div class="kind">
+        Akad Nikah
+      </div>
+
+      <div class="time">
+        09.00 – 11.00 WIB
+      </div>
+
+      <div class="place">
+
+        Aula Graha Prima Blok A,
+        RT.001/RW.016
+
         <br>
+
+        Kel. Mangunjaya,
         Kec. Tambun Selatan
 
-        <div>
-
-          <a
-            class="maps-btn"
-            href="https://maps.app.goo.gl/LEpPzCG4xsgzit1C6?g_st=ipc"
-            target="_blank"
-            rel="noopener"
-          >
-            📍 Buka di Google Maps
-          </a>
-
-        </div>
-
       </div>
 
     </div>
 
-  </section>
 
+    <div class="agenda-sep">
 
-  <!-- DOA RESTU -->
-  <section id="gallery">
-
-    <div class="petals">
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-    </div>
-
-    <div class="wrap center reveal">
-
-      <div class="eyebrow-serif">
-        Doa Restu
-      </div>
-
-      <h2
-        class="display"
-        style="font-size:26px; margin-top:6px;"
+      <svg
+        width="45"
+        height="35"
+        viewBox="0 0 45 35"
+        fill="none"
       >
-        Merangkai kasih menjadi satu
-      </h2>
 
-      <p
-        style="
-          color:var(--ink-soft);
-          max-width:420px;
-          margin:14px auto 0;
-        "
-      >
-        Kehadiran serta doa restu Bapak/Ibu/Saudara/i
-        merupakan kebahagiaan dan kehormatan besar
-        bagi kami.
-      </p>
+        <path
+          d="M3 18 C15 10 20 25 30 17 C35 13 39 12 42 15"
+          stroke="#7D9B69"
+          stroke-width="1.3"
+        />
 
+        <circle
+          cx="22"
+          cy="19"
+          r="3"
+          fill="#D99EAE"
+        />
 
-      <div class="bouquet-row">
+      </svg>
 
-
-        <!-- Flower 1 -->
-        <svg viewBox="0 0 80 110" fill="none">
-
-          <path
-            d="M40 105 C40 75 35 50 25 28"
-            stroke="#7D966F"
-            stroke-width="2"
-          />
-
-          <path
-            d="M39 76 C24 68 17 57 16 46"
-            stroke="#7D966F"
-            stroke-width="1.5"
-          />
-
-          <ellipse
-            cx="20"
-            cy="57"
-            rx="7"
-            ry="16"
-            transform="rotate(-48 20 57)"
-            fill="#A9B99B"
-          />
-
-          <circle
-            cx="24"
-            cy="24"
-            r="10"
-            fill="#AFC5D4"
-          />
-
-          <circle
-            cx="14"
-            cy="31"
-            r="9"
-            fill="#C8C3D5"
-          />
-
-          <circle
-            cx="34"
-            cy="31"
-            r="9"
-            fill="#E7D5D5"
-          />
-
-          <circle
-            cx="24"
-            cy="34"
-            r="6"
-            fill="#B9A06A"
-          />
-
-        </svg>
+    </div>
 
 
-        <!-- Flower 2 -->
-        <svg viewBox="0 0 80 110" fill="none">
+    <!-- RESEPSI -->
 
-          <path
-            d="M40 108 C40 72 41 48 40 27"
-            stroke="#7D966F"
-            stroke-width="2"
-          />
+    <div class="agenda-card">
 
-          <path
-            d="M40 67 C52 60 58 51 59 42"
-            stroke="#7D966F"
-            stroke-width="1.5"
-          />
+      <div class="kind">
+        Resepsi
+      </div>
 
-          <ellipse
-            cx="56"
-            cy="54"
-            rx="6"
-            ry="15"
-            transform="rotate(48 56 54)"
-            fill="#A9B99B"
-          />
+      <div class="time">
+        13.00 – 17.00 WIB
+      </div>
 
-          <circle
-            cx="40"
-            cy="24"
-            r="9"
-            fill="#E7D5D5"
-          />
+      <div class="place">
 
-          <circle
-            cx="31"
-            cy="30"
-            r="8"
-            fill="#C8C3D5"
-          />
+        Aula Graha Prima Blok A,
+        RT.001/RW.016
 
-          <circle
-            cx="49"
-            cy="30"
-            r="8"
-            fill="#AFC5D4"
-          />
+        <br>
 
-          <circle
-            cx="40"
-            cy="32"
-            r="5"
-            fill="#B9A06A"
-          />
-
-        </svg>
-
-
-        <!-- Flower 3 -->
-        <svg viewBox="0 0 80 110" fill="none">
-
-          <path
-            d="M40 108 C40 80 46 55 55 34"
-            stroke="#7D966F"
-            stroke-width="2"
-          />
-
-          <ellipse
-            cx="49"
-            cy="67"
-            rx="6"
-            ry="15"
-            transform="rotate(40 49 67)"
-            fill="#A9B99B"
-          />
-
-          <ellipse
-            cx="35"
-            cy="74"
-            rx="6"
-            ry="15"
-            transform="rotate(-45 35 74)"
-            fill="#A9B99B"
-          />
-
-          <circle
-            cx="55"
-            cy="29"
-            r="10"
-            fill="#AFC5D4"
-          />
-
-          <circle
-            cx="45"
-            cy="35"
-            r="9"
-            fill="#E7D5D5"
-          />
-
-          <circle
-            cx="65"
-            cy="35"
-            r="9"
-            fill="#C8C3D5"
-          />
-
-          <circle
-            cx="55"
-            cy="38"
-            r="6"
-            fill="#B9A06A"
-          />
-
-        </svg>
+        Kel. Mangunjaya,
+        Kec. Tambun Selatan
 
       </div>
 
     </div>
 
-  </section>
+
+    <div class="venue-box">
+
+      <span class="venue-name">
+        Aula Graha Prima
+      </span>
+
+      Blok A, RT.001/RW.016,
+      Kel. Mangunjaya,
+
+      <br>
+
+      Kec. Tambun Selatan
 
 
-  <!-- WISHES -->
-  <section id="wishes">
+      <div>
 
-    <div class="petals">
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-      <span class="petal"></span>
-    </div>
-
-    <div class="wrap center reveal">
-
-      <div class="eyebrow-serif">
-        Ucapan &amp; Doa
-      </div>
-
-      <h2
-        class="display"
-        style="font-size:26px; margin-top:6px;"
-      >
-        Kirimkan Ucapanmu
-      </h2>
-
-
-      <div class="wish-form">
-
-        <input
-          type="text"
-          id="wishName"
-          placeholder="Nama kamu"
+        <a
+          class="maps-btn"
+          href="https://maps.app.goo.gl/LEpPzCG4xsgzit1C6?g_st=ipc"
+          target="_blank"
+          rel="noopener"
         >
+          📍 Buka di Google Maps
+        </a>
 
-        <select id="wishStatus">
-
-          <option value="Hadir">
-            Insyaallah Hadir
-          </option>
-
-          <option value="Tidak Hadir">
-            Belum Bisa Hadir
-          </option>
-
-          <option value="Ragu">
-            Masih Ragu
-          </option>
-
-        </select>
-
-        <textarea
-          id="wishText"
-          placeholder="Tulis doa &amp; ucapan untuk Fasya &amp; Millen..."
-        ></textarea>
-
-        <button
-          class="send-btn"
-          id="sendWish"
-        >
-          Kirim Ucapan
-        </button>
-
-        <div class="wish-note">
-          Ucapan tersimpan di perangkatmu sendiri
-          dan akan tampil di daftar di bawah ini.
-        </div>
-
-      </div>
-
-
-      <div
-        class="wish-list"
-        id="wishList"
-      ></div>
-
-    </div>
-
-  </section>
-
-
-  <!-- CLOSING -->
-  <section id="closing">
-
-    <div class="wrap reveal">
-
-      <div class="display">
-        Terima Kasih
-      </div>
-
-      <p class="thanks">
-        Atas kehadiran serta doa restu yang
-        Bapak/Ibu/Saudara/i berikan,
-        kami ucapkan terima kasih
-        yang setulus-tulusnya.
-      </p>
-
-      <div class="script closing-names">
-        Fasya &amp; Millen
       </div>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     DOA RESTU
+======================================================= -->
+
+<section id="gallery">
+
+
+  <div class="wrap gallery-inner reveal">
+
+    <div class="eyebrow-serif">
+      Doa Restu
+    </div>
+
+    <h2 class="display gallery-title">
+      Merangkai kasih menjadi satu
+    </h2>
+
+    <p class="gallery-copy">
+
+      Kehadiran serta doa restu
+      Bapak/Ibu/Saudara/i
+      merupakan kebahagiaan dan
+      kehormatan besar bagi kami.
+
+    </p>
+
+
+    <div class="bouquet-row">
+
+
+      <!-- flower 1 -->
+
+      <svg
+        viewBox="0 0 130 150"
+        fill="none"
+      >
+
+        <path
+          d="M70 145 C70 110 57 78 35 43"
+          stroke="#7D9B69"
+          stroke-width="2"
+        />
+
+        <path
+          d="M58 105 C35 96 22 81 18 64"
+          stroke="#7D9B69"
+          stroke-width="1.5"
+        />
+
+        <ellipse
+          cx="31"
+          cy="86"
+          rx="7"
+          ry="20"
+          transform="rotate(-55 31 86)"
+          fill="#A9BC91"
+        />
+
+        <ellipse
+          cx="56"
+          cy="110"
+          rx="6"
+          ry="17"
+          transform="rotate(65 56 110)"
+          fill="#A9BC91"
+        />
+
+        <circle
+          cx="35"
+          cy="38"
+          r="13"
+          fill="#91B7D5"
+        />
+
+        <circle
+          cx="21"
+          cy="47"
+          r="11"
+          fill="#D99EAE"
+        />
+
+        <circle
+          cx="49"
+          cy="47"
+          r="11"
+          fill="#E8D28C"
+        />
+
+        <circle
+          cx="35"
+          cy="50"
+          r="7"
+          fill="#B79B62"
+        />
+
+      </svg>
+
+
+      <!-- flower 2 -->
+
+      <svg
+        viewBox="0 0 130 150"
+        fill="none"
+      >
+
+        <path
+          d="M65 148 C65 108 67 75 65 40"
+          stroke="#7D9B69"
+          stroke-width="2"
+        />
+
+        <path
+          d="M65 98 C86 87 96 72 98 56"
+          stroke="#7D9B69"
+          stroke-width="1.5"
+        />
+
+        <ellipse
+          cx="89"
+          cy="78"
+          rx="7"
+          ry="19"
+          transform="rotate(48 89 78)"
+          fill="#A9BC91"
+        />
+
+        <circle
+          cx="65"
+          cy="35"
+          r="13"
+          fill="#D99EAE"
+        />
+
+        <circle
+          cx="51"
+          cy="43"
+          r="11"
+          fill="#AAA7C4"
+        />
+
+        <circle
+          cx="79"
+          cy="43"
+          r="11"
+          fill="#91B7D5"
+        />
+
+        <circle
+          cx="65"
+          cy="46"
+          r="7"
+          fill="#B79B62"
+        />
+
+      </svg>
+
+
+      <!-- flower 3 -->
+
+      <svg
+        viewBox="0 0 130 150"
+        fill="none"
+      >
+
+        <path
+          d="M65 147 C65 112 74 80 96 47"
+          stroke="#7D9B69"
+          stroke-width="2"
+        />
+
+        <path
+          d="M76 103 C58 94 48 82 44 66"
+          stroke="#7D9B69"
+          stroke-width="1.5"
+        />
+
+        <ellipse
+          cx="53"
+          cy="87"
+          rx="7"
+          ry="18"
+          transform="rotate(-45 53 87)"
+          fill="#A9BC91"
+        />
+
+        <ellipse
+          cx="82"
+          cy="96"
+          rx="6"
+          ry="17"
+          transform="rotate(40 82 96)"
+          fill="#A9BC91"
+        />
+
+        <circle
+          cx="96"
+          cy="43"
+          r="13"
+          fill="#E8D28C"
+        />
+
+        <circle
+          cx="82"
+          cy="51"
+          r="11"
+          fill="#91B7D5"
+        />
+
+        <circle
+          cx="110"
+          cy="51"
+          r="11"
+          fill="#D99EAE"
+        />
+
+        <circle
+          cx="96"
+          cy="54"
+          r="7"
+          fill="#B79B62"
+        />
+
+      </svg>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     WISHES
+======================================================= -->
+
+<section id="wishes">
+
+  <div class="wrap center reveal">
+
+    <div class="eyebrow-serif">
+      Ucapan &amp; Doa
+    </div>
+
+    <h2
+      class="display"
+      style="font-size:27px; margin-top:7px;"
+    >
+      Kirimkan Ucapanmu
+    </h2>
+
+
+    <div class="wish-form">
+
+      <input
+        type="text"
+        id="wishName"
+        placeholder="Nama kamu"
+      >
+
+
+      <select id="wishStatus">
+
+        <option value="Hadir">
+          Insyaallah Hadir
+        </option>
+
+        <option value="Tidak Hadir">
+          Belum Bisa Hadir
+        </option>
+
+        <option value="Ragu">
+          Masih Ragu
+        </option>
+
+      </select>
+
+
+      <textarea
+        id="wishText"
+        placeholder="Tulis doa &amp; ucapan untuk Fasya &amp; Millen..."
+      ></textarea>
+
+
+      <button
+        class="send-btn"
+        id="sendWish"
+      >
+        Kirim Ucapan
+      </button>
+
+
+      <div class="wish-note">
+
+        Ucapan tersimpan di perangkatmu sendiri
+        dan akan tampil di daftar di bawah ini.
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="wish-list"
+      id="wishList"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     CLOSING
+======================================================= -->
+
+<section id="closing">
+
+
+  <div class="closing-decoration">
+
+    <svg
+      viewBox="0 0 180 90"
+      fill="none"
+    >
+
+      <path
+        d="M8 65 C35 35 57 50 75 38 C92 27 111 48 132 35 C148 25 163 32 172 20"
+        stroke="#7D9B69"
+        stroke-width="1.8"
+      />
+
+      <ellipse
+        cx="42"
+        cy="48"
+        rx="6"
+        ry="14"
+        transform="rotate(-48 42 48)"
+        fill="#A9BC91"
+      />
+
+      <ellipse
+        cx="143"
+        cy="35"
+        rx="6"
+        ry="14"
+        transform="rotate(48 143 35)"
+        fill="#A9BC91"
+      />
+
+      <circle
+        cx="88"
+        cy="31"
+        r="9"
+        fill="#D99EAE"
+      />
+
+      <circle
+        cx="78"
+        cy="37"
+        r="7"
+        fill="#91B7D5"
+      />
+
+      <circle
+        cx="98"
+        cy="37"
+        r="7"
+        fill="#E8D28C"
+      />
+
+      <circle
+        cx="88"
+        cy="40"
+        r="5"
+        fill="#B79B62"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div class="wrap reveal">
+
+    <div class="display">
+      Terima Kasih
+    </div>
+
+    <p class="thanks">
+
+      Atas kehadiran serta doa restu
+      yang Bapak/Ibu/Saudara/i berikan,
+      kami ucapkan terima kasih
+      yang setulus-tulusnya.
+
+    </p>
+
+    <div class="script closing-names">
+      Fasya &amp; Millen
+    </div>
+
+  </div>
+
+</section>
 
 
 </div>
 
 
-<!-- =========================================
-     HIDDEN YOUTUBE MUSIC PLAYER
-========================================= -->
+<!-- =======================================================
+     YOUTUBE MUSIC
+======================================================= -->
 
 <div
   style="
@@ -1949,9 +2931,9 @@
 </div>
 
 
-<!-- =========================================
+<!-- =======================================================
      MUSIC BUTTON
-========================================= -->
+======================================================= -->
 
 <button
   id="music-toggle"
@@ -1961,7 +2943,7 @@
   <svg
     viewBox="0 0 24 24"
     fill="none"
-    stroke="#3D4650"
+    stroke="#3F4145"
     stroke-width="1.6"
   >
 
@@ -1984,271 +2966,387 @@
 </button>
 
 
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
 <script>
 
-  /* =========================================
-     ENVELOPE OPEN
-  ========================================= */
 
-  const params =
-    new URLSearchParams(window.location.search);
+/* =========================================================
+   GUEST NAME
+========================================================= */
 
-  const to =
-    params.get('to');
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-  if(to){
-
-    document.getElementById('guestName').textContent =
-      decodeURIComponent(to);
-
-  }
+const to =
+  params.get('to');
 
 
-  /* =========================================
-     YOUTUBE MUSIC
-  ========================================= */
-
-  const yt =
-    document.getElementById('ytplayer');
-
-  let playing = false;
-
-
-  function ytCommand(func){
-
-    try{
-
-      yt.contentWindow.postMessage(
-        JSON.stringify({
-          event:'command',
-          func:func,
-          args:[]
-        }),
-        '*'
-      );
-
-    }catch(e){}
-
-  }
-
+if(to){
 
   document
-    .getElementById('openBtn')
-    .addEventListener('click', function(){
+    .getElementById('guestName')
+    .textContent =
+      decodeURIComponent(to);
+
+}
+
+
+/* =========================================================
+   YOUTUBE
+========================================================= */
+
+const yt =
+  document.getElementById(
+    'ytplayer'
+  );
+
+let playing = false;
+
+
+function ytCommand(func){
+
+  try{
+
+    yt.contentWindow.postMessage(
+
+      JSON.stringify({
+
+        event:'command',
+
+        func:func,
+
+        args:[]
+
+      }),
+
+      '*'
+
+    );
+
+  }catch(e){}
+
+}
+
+
+/* =========================================================
+   OPEN INVITATION
+========================================================= */
+
+document
+  .getElementById('openBtn')
+  .addEventListener(
+    'click',
+    function(){
 
       document
-        .getElementById('envelope-screen')
-        .classList.add('hidden');
+        .getElementById(
+          'envelope-screen'
+        )
+        .classList
+        .add('hidden');
+
 
       document
-        .getElementById('invitation')
-        .classList.add('shown');
+        .getElementById(
+          'invitation'
+        )
+        .classList
+        .add('shown');
+
 
       document.body.style.overflow =
         'auto';
 
-      ytCommand('playVideo');
+
+      ytCommand(
+        'playVideo'
+      );
+
 
       playing = true;
 
+
       document
-        .getElementById('music-toggle')
-        .classList.add('spinning');
+        .getElementById(
+          'music-toggle'
+        )
+        .classList
+        .add('spinning');
+
 
       setTimeout(
         revealOnScroll,
         300
       );
 
-    });
+    }
+  );
 
 
-  document
-    .getElementById('music-toggle')
-    .addEventListener('click', function(){
+/* =========================================================
+   MUSIC TOGGLE
+========================================================= */
+
+document
+  .getElementById(
+    'music-toggle'
+  )
+  .addEventListener(
+    'click',
+    function(){
 
       if(playing){
 
-        ytCommand('pauseVideo');
-
-        this.classList.remove(
-          'spinning'
+        ytCommand(
+          'pauseVideo'
         );
+
+        this
+          .classList
+          .remove(
+            'spinning'
+          );
 
       }else{
 
-        ytCommand('playVideo');
-
-        this.classList.add(
-          'spinning'
+        ytCommand(
+          'playVideo'
         );
+
+        this
+          .classList
+          .add(
+            'spinning'
+          );
 
       }
 
-      playing = !playing;
+      playing =
+        !playing;
 
-    });
-
-
-  /* Lock scroll until invitation opened */
-
-  document.body.style.overflow =
-    'hidden';
+    }
+  );
 
 
-  /* =========================================
-     SCROLL REVEAL
-  ========================================= */
+/* =========================================================
+   LOCK SCROLL
+========================================================= */
 
-  function revealOnScroll(){
+document.body.style.overflow =
+  'hidden';
 
-    const els =
-      document.querySelectorAll('.reveal');
 
-    const obs =
-      new IntersectionObserver(
-        (entries)=>{
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
 
-          entries.forEach(e=>{
+function revealOnScroll(){
 
-            if(e.isIntersecting){
+  const elements =
+    document.querySelectorAll(
+      '.reveal'
+    );
 
-              e.target.classList.add('in');
+
+  const observer =
+    new IntersectionObserver(
+
+      (entries)=>{
+
+        entries.forEach(
+          entry=>{
+
+            if(
+              entry.isIntersecting
+            ){
+
+              entry
+                .target
+                .classList
+                .add('in');
 
             }
 
-          });
-
-        },
-        {
-          threshold:0.15
-        }
-      );
-
-
-    els.forEach(el =>
-      obs.observe(el)
-    );
-
-  }
-
-
-  /* =========================================
-     WISHES / LOCAL GUESTBOOK
-  ========================================= */
-
-  const listEl =
-    document.getElementById('wishList');
-
-  const STORAGE_KEY =
-    'fasya-millen-wishes';
-
-
-  function loadWishes(){
-
-    try{
-
-      const raw =
-        localStorage.getItem(
-          STORAGE_KEY
+          }
         );
 
-      return raw
-        ? JSON.parse(raw)
-        : [];
+      },
 
-    }catch(e){
+      {
+        threshold:.12
+      }
 
-      return [];
-
-    }
-
-  }
+    );
 
 
-  function saveWishes(list){
+  elements.forEach(
+    element =>
+      observer.observe(element)
+  );
 
-    try{
+}
 
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(list)
+
+/* =========================================================
+   WISHES
+========================================================= */
+
+const listEl =
+  document.getElementById(
+    'wishList'
+  );
+
+const STORAGE_KEY =
+  'fasya-millen-wishes';
+
+
+function loadWishes(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
       );
 
-    }catch(e){}
+    return raw
+      ? JSON.parse(raw)
+      : [];
+
+  }catch(e){
+
+    return [];
 
   }
 
+}
 
-  function renderWishes(){
 
-    const list =
-      loadWishes();
+function saveWishes(list){
 
-    listEl.innerHTML =
-      '';
+  try{
 
-    list
-      .slice()
-      .reverse()
-      .forEach(w=>{
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(list)
+    );
+
+  }catch(e){}
+
+}
+
+
+function renderWishes(){
+
+  const list =
+    loadWishes();
+
+
+  listEl.innerHTML =
+    '';
+
+
+  list
+    .slice()
+    .reverse()
+    .forEach(
+      wish=>{
 
         const div =
-          document.createElement('div');
+          document.createElement(
+            'div'
+          );
+
 
         div.className =
           'wish-item';
 
+
         div.innerHTML =
+
           '<span class="who"></span> ' +
+
           '<span class="att"></span>' +
+
           '<div class="txt"></div>';
+
 
         div
           .querySelector('.who')
           .textContent =
-          w.name;
+            wish.name;
+
 
         div
           .querySelector('.att')
           .textContent =
-          '· ' + w.status;
+            ' · ' +
+            wish.status;
+
 
         div
           .querySelector('.txt')
           .textContent =
-          w.text;
-
-        listEl.appendChild(div);
-
-      });
-
-  }
+            wish.text;
 
 
-  document
-    .getElementById('sendWish')
-    .addEventListener('click', function(){
+        listEl.appendChild(
+          div
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   SEND WISH
+========================================================= */
+
+document
+  .getElementById(
+    'sendWish'
+  )
+  .addEventListener(
+    'click',
+    function(){
 
       const name =
         document
-          .getElementById('wishName')
+          .getElementById(
+            'wishName'
+          )
           .value
           .trim();
+
 
       const status =
         document
-          .getElementById('wishStatus')
+          .getElementById(
+            'wishStatus'
+          )
           .value;
+
 
       const text =
         document
-          .getElementById('wishText')
+          .getElementById(
+            'wishText'
+          )
           .value
           .trim();
 
 
-      if(!name || !text){
+      if(
+        !name ||
+        !text
+      ){
 
         return;
 
@@ -2260,32 +3358,48 @@
 
 
       list.push({
-        name,
-        status,
-        text
+
+        name:name,
+
+        status:status,
+
+        text:text
+
       });
 
 
-      saveWishes(list);
+      saveWishes(
+        list
+      );
 
 
       document
-        .getElementById('wishName')
+        .getElementById(
+          'wishName'
+        )
         .value =
-        '';
+          '';
+
 
       document
-        .getElementById('wishText')
+        .getElementById(
+          'wishText'
+        )
         .value =
-        '';
+          '';
 
 
       renderWishes();
 
-    });
+    }
+  );
 
 
-  renderWishes();
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+renderWishes();
 
 </script>
 
